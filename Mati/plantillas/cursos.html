@@ -1,0 +1,24 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block titulo %} FORMULARIO DE CARGA DE CURSOS {% endblock %}
+
+{% block contenido_que_cambia %}
+    <h1>Cursos</h1>
+    <ul>
+        {% for curso in cursos %}
+            <li>{{ curso.nombre }} - {{curso.comision}}</li>
+        {% endfor %}    
+    </ul>
+    <h2>Formulario</h2>
+    <form action="{% url 'cursos' %}" method="POST"> {% csrf_token %}
+        
+        {{ formulario.as_p }}
+
+
+        <input type="submit" value="Guardar Curso">
+    </form>
+
+    <h3>{{ mensaje }}</h3>
+{% endblock %}
