@@ -3,8 +3,12 @@ from Mati.views import *
 
 urlpatterns = [
     path("", inicio, name="inicio"),
-    path("profes/", profesor, name="profesores"),
-    path("estudiantes/", estudiante, name="estudiantes"),
-    path("cursos/", cursos, name="cursos"),
-    path("listacursos/", listar_cursos),
+    path("arbitros/", arbitro, name="arbitros"),
+    path("equipos/", equipo, name="equipos"),
+    path("torneos/", torneo, name="torneos"),
+    path("buscar/", busqueda, name="buscar"),
+    path("resultados-torneo/", buscarTorneo, name="ResultadoTorneo"),
+    path("resultados-equipo/", buscarEquipo, name="ResultadoEquipo"),
+    path("resultados-arbitro/", buscarArbitro, name="ResultadoArbitro"),
+    
 ]

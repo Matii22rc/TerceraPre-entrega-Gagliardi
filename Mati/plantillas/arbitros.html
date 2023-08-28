@@ -1,0 +1,19 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block titulo %} VISTA Y CARGA DE ARBITROS {% endblock %}
+
+{% block contenido_que_cambia %}
+<h1>Contenido página de Profesores</h1>
+<h2>Arbitros</h2>
+{% for arbitro in arbitros %}
+    <li>{{ arbitro.nombre }} {{ arbitro.apellido }}</li>
+{% endfor %} 
+<h2>Formulario</h2>
+<form action="{% url 'arbitros' %}" method="POST"> {% csrf_token %}
+    {{ formulario.as_p }}
+    <input type="submit" value="Guardar Arbitro">
+</form>
+<h3>{{ mensaje }}</h3>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block titulo %} VISTA Y CARGA DE CARGA DE TORNEOS {% endblock %}
+
+{% block contenido_que_cambia %}
+    <h1>TORNEOS</h1>
+    <ul>
+        {% for torneo in torneos %}
+            <li>{{ torneo.nombre }}</li>
+        {% endfor %}    
+    </ul>
+    <h2>Formulario</h2>
+    <form action="{% url 'torneos' %}" method="POST"> {% csrf_token %}
+        
+        {{ formulario.as_p }}
+
+
+        <input type="submit" value="Guardar Torneo">
+    </form>
+
+    <h3>{{ mensaje }}</h3>
+{% endblock %}

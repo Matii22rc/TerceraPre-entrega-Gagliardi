@@ -1,0 +1,16 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block titulo %} Resultados de la búsqueda {% endblock %}
+
+{% block contenido_que_cambia %}
+{% if equipos %}
+    <h1>Resultados de búsqueda</h1>
+    {% for equipo in equipos %}
+        <h3>{{ equipo.nombre }} - {{ equipo.jugadores }} jugadores</h3>
+    {% endfor %}
+{% else %}
+    <h1>NO SE ENCONTRARON RESULTADOS</h1>
+{% endif %}
+{% endblock %}

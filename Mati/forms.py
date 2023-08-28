@@ -1,16 +1,13 @@
 from django import forms
 
-class CursoForm(forms.Form):
+class TorneoForm(forms.Form):
     nombre=forms.CharField(max_length=50)
-    comision=forms.IntegerField()
 
-class ProfesorForm(forms.Form):
+class ArbitroForm(forms.Form):
     nombre=forms.CharField(max_length=50)
     apellido=forms.CharField(max_length=50)
     email=forms.EmailField()
-    profesion=forms.CharField(max_length=50)
 
-class EstudianteForm(forms.Form):
+class EquipoForm(forms.Form):
     nombre=forms.CharField(max_length=50)
-    apellido=forms.CharField(max_length=50)
-    email=forms.EmailField()
+    jugadores=forms.IntegerField()

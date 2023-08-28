@@ -1,0 +1,21 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block titulo %} VISTA BÚSQUEDA {% endblock %}
+
+{% block contenido_que_cambia %}
+<form action="{% url 'ResultadoTorneo' %}" method="GET">
+    <input type="number" name="torneo" id="torneo" placeholder="INSERTE TORNEO">
+    <input type="submit" value="Buscar">
+</form>
+<form action="{% url 'ResultadoArbitro' %}" method="GET">
+    <input type="text" name="arbitro" id="arbitro" placeholder="INSERTE ARBITRO">
+    <input type="submit" value="Buscar">
+</form>
+<form action="{% url 'ResultadoEquipo' %}" method="GET">
+    <input type="text" name="equipo" id="equipo" placeholder="INSERTE EQUIPO">
+    <input type="submit" value="Buscar">
+</form>
+<h2>{{ mensaje }}</h2>
+{% endblock %}

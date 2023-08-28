@@ -8,75 +8,79 @@ from .forms import *
 def inicio(request):
     return render(request,"index.html")
 
-def estudiante(request):
-    estudiantes=Estudiante.objects.all()
+def equipo(request):
+    equipos=Equipo.objects.all()
     if request.method=="POST":
-        form=EstudianteForm(request.POST)
+        form=EquipoForm(request.POST)
         if form.is_valid():
             info=form.cleaned_data
             nombre=info["nombre"]
-            apellido=info["apellido"]
-            email=info["email"]
-            estudiante=Estudiante(nombre=nombre, apellido=apellido, email=email)
-            estudiante.save()
-            form=EstudianteForm()
-            return render(request,"estudiantes.html", {"formulario":form, "estudiantes":estudiantes, "mensaje":"Estudiante creado"})
+            jugadores=info["jugadores"]
+            equipo=Equipo(nombre=nombre, jugadores=jugadores)
+            equipo.save()
+            form=EquipoForm()
+            return render(request,"equipos.html", {"formulario":form, "equipos":equipos, "mensaje":"Equipo creado"})
         else:
-            return render(request,"estudiantes.html", {"formulario":form, "estudiantes":estudiantes, "mensaje":"Datos inválidos"})    
+            return render(request,"equipos.html", {"formulario":form, "equipos":equipos, "mensaje":"Datos inválidos"})    
     else:
-        form=EstudianteForm()
-        return render(request,"estudiantes.html", {"formulario":form, "estudiantes":estudiantes})
+        form=EquipoForm()
+        return render(request,"equipos.html", {"formulario":form, "equipos":equipos})
 
-def profesor(request):
-    profes=Profesor.objects.all()
+def arbitro(request):
+    arbitros=Arbitro.objects.all()
     if request.method=="POST":
-        form=ProfesorForm(request.POST)
+        form=ArbitroForm(request.POST)
         if form.is_valid():
             info=form.cleaned_data
-            profe=Profesor(nombre=info["nombre"], apellido=info["apellido"], email=info["email"], profesion=info["profesion"])
-            profe.save()
-            form=ProfesorForm()
-            return render(request,"profesores.html", {"formulario":form, "profesores":profes, "mensaje":"Profesor creado"})
+            arbitro=Arbitro(nombre=info["nombre"], apellido=info["apellido"], email=info["email"])
+            arbitro.save()
+            form=ArbitroForm()
+            return render(request,"arbitros.html", {"formulario":form, "arbitros":arbitros, "mensaje":"Arbitro creado"})
         else:
-            return render(request,"profesores.html", {"formulario":form, "profesores":profes, "mensaje":"Datos inválidos"})
+            return render(request,"arbitros.html", {"formulario":form, "arbitros":arbitros, "mensaje":"Datos inválidos"})
     else:
-        form=ProfesorForm()
-        return render(request,"profesores.html", {"formulario":form, "profesores":profes})
+        form=ArbitroForm()
+        return render(request,"arbitros.html", {"formulario":form, "arbitros":arbitros})
 
-def cursos(request):
-    cursos=Curso.objects.all()
+def torneo(request):
+    torneos=Torneo.objects.all()
     if request.method=="POST":
-        form=CursoForm(request.POST)
+        form=TorneoForm(request.POST)
         if form.is_valid():
             info=form.cleaned_data
             nombre=info["nombre"]
-            comision=info["comision"]
-            curso=Curso(nombre=nombre,comision=comision)
-            curso.save()
-            form=CursoForm()
-            return render(request, "cursos.html", {"formulario":form, "cursos":cursos, "mensaje":"Curso creado"})
-        return render(request, "cursos.html", {"formulario":form, "cursos":cursos, "mensaje":"Datos inválidos"})
+            torneo=Torneo(nombre=nombre)
+            torneo.save()
+            form=TorneoForm()
+            return render(request, "torneos.html", {"formulario":form, "torneos":torneos, "mensaje":"Torneo creado"})
+        return render(request, "torneos.html", {"formulario":form, "torneos":torneos, "mensaje":"Datos inválidos"})
     else:
-        form=CursoForm()
-        return render(request, "cursos.html", {"formulario":form, "cursos":cursos})
+        form=TorneoForm()
+        return render(request, "torneos.html", {"formulario":form, "torneos":torneos})
 
-def listar_profes(request):
-    profes=Profesor.objects.all()
-    respuesta=""
-    for profe in profes:
-        respuesta+=f"{profe.nombre} {profe.apellido} - {profe.profesion}"
-    return HttpResponse(respuesta)   
+def busqueda(request):
+    return render(request, "busqueda.html")
 
-def listar_estudiantes(request):
-    estudiantes=Estudiante.objects.all()
-    respuesta=""
-    for estudiante in estudiantes:
-        respuesta+=f"{estudiante.nombre} {estudiante.apellido}"
-    return HttpResponse(respuesta)
+def buscarTorneo(request):
+    torneo=request.GET["torneo"]
+    if torneo!="":
+        torneos=Torneo.objects.filter(nombre__icontains=torneo)
+        return render(request, "resultadosBusqueda-torneo.html", {"torneos":torneos})
+    else:
+        return render(request, "busqueda.html", {"mensaje":"Ningún dato ingresado"})
 
-def listar_cursos(request):
-    cursos=Curso.objects.all()
-    respuesta=""
-    for curso in cursos:
-        respuesta+=f"{curso.nombre} - {curso.comision}"
-    return HttpResponse(respuesta)
+def buscarArbitro(request):
+    arbitro=request.GET["arbitro"]
+    if parbitro!="":
+        arbitros=Arbitro.objects.filter(apellido=arbitro)
+        return render(request, "resultadosBusqueda-arbitro.html", {"arbitros":arbitros})
+    else:
+        return render(request, "busqueda.html", {"mensaje":"Ningún dato ingresado"})
+
+def buscarEquipo(request):
+    equipo=request.GET["equipo"]
+    if equipo!="":
+        equipos=Equipo.objects.filter(nombre=equipo)
+        return render(request, "resultadosBusqueda-equipo.html", {"equipos":equipos})
+    else:
+        return render(request, "busqueda.html", {"mensaje":"Ningún dato ingresado"})
